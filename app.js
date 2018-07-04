@@ -20,6 +20,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 //connect flash
 app.use(flash());
+//Serialising User Into Session.
+passport.serializeUser(function(user,done){
+    done(null,user);
+});
+//Deserialising User From Session.
+passport.deserializeUser(function(user,done){
+    done(null,user);
+});
 
 
 //custom routes
