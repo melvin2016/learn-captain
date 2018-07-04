@@ -11,13 +11,8 @@ app.use(express.static(path.resolve(__dirname,'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
-//cookie parser
-app.use(require('cookie-parser')());
-//express session
-app.use(require('express-session')({ secret: 'L#K3me0RNOt', resave: true, saveUninitialized: true }));
 //using passport session and initialising passport.
 app.use(passport.initialize());
-app.use(passport.session());
 //connect flash
 app.use(flash());
 //Serialising User Into Session.

@@ -21,7 +21,7 @@ passport.use(new LocalStrategy({usernameField:"userid", passwordField:"password"
             .then((res)=>{
                 //if res == true then password verified else not
                 if(res){
-                    return done(null,user,{message:"Password Verified",bool:res});
+                    return done(null,user,{message:"Password Verified",userid:user.userid});
                 }else{
                     return done(null,false,{message:"Incorrect Password",bool:res});
                 }

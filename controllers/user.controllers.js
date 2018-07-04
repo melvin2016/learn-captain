@@ -1,5 +1,6 @@
 //required modules
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'),
+      jwt = require('jsonwebtoken');
 //User model
 const UserModel = require('../mongodb/models/userReg.db');
 
@@ -42,8 +43,11 @@ const register = (req,res)=>{
 };
 // /user/login controller
 const login = (req,res)=>{
-    
-    res.send(`authenticated. ${req.flash('message')}` );
+    const secret = 'Y0lO30L0Blaf';
+    jwt.sign({userid : req.authInfo.userid},secret,{ expiresIn: '1h' },(err,jwt)=>{
+        if (err) throw err;
+        res.send({jwt : jwt}); 
+    });
 }
 //exporting
 module.exports = {
