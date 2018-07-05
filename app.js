@@ -32,7 +32,7 @@ app.use('/user',userRoutes);
 
 
 //SETTING PORT
-const PORT = 3000 || process.env.PORT;
+const PORT = 8080 || process.env.PORT;
 //listening on port 
 app.listen(PORT,()=>{
     console.log(`Asecapp Running on port : ${PORT}`);
