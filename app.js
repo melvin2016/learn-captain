@@ -6,7 +6,7 @@ const express = require('express'),
       passport = require('passport');
 
 //serving static files
-app.use(express.static(path.resolve(__dirname,'public')));
+app.use(express.static(path.resolve(__dirname,'public/asecapp')));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
