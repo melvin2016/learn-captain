@@ -6,7 +6,7 @@ const express = require('express'),
       passport = require('passport');
 
 //serving static files
-app.use(express.static(path.resolve(__dirname,'public/asecapp')));
+app.use(express.static(path.resolve(__dirname,'public/asecapp/build')));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
@@ -32,7 +32,7 @@ app.use('/user',userRoutes);
 
 
 //SETTING PORT
-const PORT = 8080 || process.env.PORT;
+const PORT = 4000 || process.env.PORT;
 //listening on port 
 app.listen(PORT,()=>{
     console.log(`Asecapp Running on port : ${PORT}`);

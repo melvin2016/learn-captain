@@ -22,7 +22,7 @@ const register = (req,res)=>{
                 email:body.email,
                 num:body.num,
                 regno:body.regno,
-                joinedOn:body.joinedOn
+                joinedOn:Date.now()
             });
             //saving user to mongodb
             User.save((err,data)=>{
