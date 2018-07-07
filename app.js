@@ -3,8 +3,10 @@ const express = require('express'),
       path = require('path'),
       bodyParser = require('body-parser'),
       flash=require("connect-flash")
-      passport = require('passport');
-
+      passport = require('passport'),
+      cors = require('cors');
+//using cors for all reqs
+app.use(cors());
 //serving static files
 app.use(express.static(path.resolve(__dirname,'public/asecapp/build')));
 // parse application/x-www-form-urlencoded
