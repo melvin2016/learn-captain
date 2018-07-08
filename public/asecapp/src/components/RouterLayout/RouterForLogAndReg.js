@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Route , Switch} from 'react-router-dom';
+import NavBarMedium from '../navbar/NavBarMedium';
 import Login from '../loginAndRegister/login/Login';
 import Register from '../loginAndRegister/register/Register';
 import Dashboard from '../Dashboard/Dashboard';
@@ -10,6 +11,16 @@ export default class RouterForLogAndReg extends Component{
     constructor(props){
         super(props);
         this.state = {
+            links:[
+                {
+                    link:'/login',
+                    name:'Login'
+                },
+                {
+                    link:'/register',
+                    name:'Register'
+                }
+            ],
             isRegistered : false,
             isLoggedIn : false,
             isPassSame:false,
@@ -28,11 +39,11 @@ export default class RouterForLogAndReg extends Component{
         }
     }
     componentDidMount(){
+        //checks whether the user is authenticated even after a page refresh
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         if(isLoggedIn === "true"){
             this.setState({isLoggedIn:true});
         }
-        
     }
     //============LOGIN FUNCTIONS===========================================
     //capturing input data handler
@@ -52,6 +63,7 @@ export default class RouterForLogAndReg extends Component{
         .then((res)=>{
             if(res.status === 200){
                 localStorage.setItem('isLoggedIn',true);
+                localStorage.setItem('jwt',res.data.jwt);
                 this.setState({isLoggedIn:true});
             }
         })
@@ -99,6 +111,7 @@ export default class RouterForLogAndReg extends Component{
     render(){
         return (
             <React.Fragment>
+                {(this.state.isLoggedIn === true)?null:<NavBarMedium links={this.state.links}/>}
                 <Switch>
                     {/* this component is shown if route is */}
                     <Route exact path="/" render={()=><h1>Home</h1>}/>

@@ -1,12 +1,13 @@
 import React from 'react';
-import {Navbar  } from 'react-materialize';
-import { NavLink } from 'react-router-dom';
+import {Navbar} from 'react-materialize';
+import {NavLink} from 'react-router-dom';
 
-const NavBarMedium = ()=>{
+const NavBarMedium = (props)=>{
     return (
-        <Navbar brand="AsecApp" left>
-            <li><NavLink to="/login">Login</NavLink></li>
-            <li><NavLink to="/register">Register</NavLink></li>
+        <Navbar brand="AsecApp" right>
+            {props.links.map((ele)=>{
+                return <li><NavLink to={ele.link}>{ele.name}</NavLink></li>;
+            })}
         </Navbar>
     );
 }
