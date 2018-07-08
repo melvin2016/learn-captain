@@ -22,7 +22,7 @@ const Register = (props)=>{
             <Row><Input s={12} m={12} label="Mobile Number" type="tel" id="tel" validate onChange={props.handleInput}><Icon>contact_phone</Icon></Input></Row>
             <Row><Input s={12} m={12} label="University Roll No" id="uniseat" validate onChange={props.handleInput}><Icon>create</Icon></Input></Row>
             <Row><Button className={classes.submit} waves='light' onClick={props.onSubmit}>Register<Icon right>chevron_right</Icon></Button></Row>
-            //Redirects route to /login if registered successfully
+            {/* Redirects route to /login if registered successfully */}
             {props.isRegistered === true || props.isLoggedIn === true ? <Redirect to="/login"/> : null}
         </div>
     );

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {Route , Switch} from 'react-router-dom';
 import Login from '../loginAndRegister/login/Login';
 import Register from '../loginAndRegister/register/Register';
+import Dashboard from '../Dashboard/Dashboard';
+import Auth from '../Auth/Auth';
+import NotFound404 from '../NotFound404/NotFound404';
 import axios from '../../lib/axios/instance';
 export default class RouterForLogAndReg extends Component{
     constructor(props){
@@ -24,6 +27,13 @@ export default class RouterForLogAndReg extends Component{
             }
         }
     }
+    componentDidMount(){
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if(isLoggedIn === "true"){
+            this.setState({isLoggedIn:true});
+        }
+        
+    }
     //============LOGIN FUNCTIONS===========================================
     //capturing input data handler
     handleInputLog =(e)=>{
@@ -41,6 +51,7 @@ export default class RouterForLogAndReg extends Component{
         })
         .then((res)=>{
             if(res.status === 200){
+                localStorage.setItem('isLoggedIn',true);
                 this.setState({isLoggedIn:true});
             }
         })
@@ -87,19 +98,24 @@ export default class RouterForLogAndReg extends Component{
     //----------------------------------------------------------------------
     render(){
         return (
-            <Switch>
-                 //this component is shown if route is /
-                <Route exact path="/" render={()=><h1>Home</h1>}/>
-                <Route path="/login" render={(props)=>
-                    /*Giving Out Props to Login Component */
-                    <Login {...props} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
-                } />
-                <Route path="/register" render={(props) =>  
-                    /*Giving Out Props to Register Component */
-                    <Register {...props} isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
-                }/>
+            <React.Fragment>
+                <Switch>
+                    {/* this component is shown if route is */}
+                    <Route exact path="/" render={()=><h1>Home</h1>}/>
+                    <Route path="/login" render={(props)=>
+                        /*Giving Out Props to Login Component */
+                        <Login {...props} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
+                    } />
+                    <Route path="/register" render={(props) =>  
+                        /*Giving Out Props to Register Component */
+                        <Register {...props} isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
+                    }/>
+                    
+                    <Auth isLoggedIn={this.state.isLoggedIn} component={Dashboard}/>
+                    <Route component={NotFound404}/>
+                </Switch>
                 
-            </Switch>
+            </React.Fragment>
         );
     }
 };

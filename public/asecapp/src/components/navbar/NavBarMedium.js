@@ -1,6 +1,6 @@
 import React from 'react';
-import {Navbar ,Icon } from 'react-materialize';
-import { NavLink, Link } from 'react-router-dom';
+import {Navbar  } from 'react-materialize';
+import { NavLink } from 'react-router-dom';
 
 const NavBarMedium = ()=>{
     return (
