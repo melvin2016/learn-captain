@@ -1,10 +1,10 @@
 import {Route,Redirect} from 'react-router-dom';
 import React from 'react';
-const Auth = ({component:Component,isLoggedIn,...props})=>{
+const Auth = ({component:Component,isLoggedIn,logoutHandler,...props})=>{
         return (
                 <Route {...props} render={(props)=>
                         (isLoggedIn===true)?
-                        <Component {...props}/>:<Redirect to="/login"/>
+                        <Component {...props} logoutHandler={logoutHandler}/>:<Redirect to="/login"/>
                 }/>
         );
 };

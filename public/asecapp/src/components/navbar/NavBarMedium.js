@@ -6,7 +6,7 @@ const NavBarMedium = (props)=>{
     return (
         <Navbar brand="AsecApp" right>
             {props.links.map((ele)=>{
-                return <li><NavLink to={ele.link}>{ele.name}</NavLink></li>;
+                return <li key={ele.name} onClick={(typeof ele.func === "function")?ele.func:null} ><NavLink to={ele.link}>{ele.name}</NavLink></li>;
             })}
         </Navbar>
     );

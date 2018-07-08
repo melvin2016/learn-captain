@@ -43,8 +43,17 @@ export default class RouterForLogAndReg extends Component{
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         if(isLoggedIn === "true"){
             this.setState({isLoggedIn:true});
+        }else{
+            this.setState({isLoggedIn:false});
         }
     }
+    //============LOGOUT FUNCTIONS==========================================
+    logoutHandler = ()=>{
+        console.log("logout");
+        localStorage.clear();
+        this.setState({isLoggedIn:false,isRegistered:false});
+    }
+    //----------------------------------------------------------------------
     //============LOGIN FUNCTIONS===========================================
     //capturing input data handler
     handleInputLog =(e)=>{
@@ -124,7 +133,7 @@ export default class RouterForLogAndReg extends Component{
                         <Register {...props} isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
                     }/>
                     
-                    <Auth isLoggedIn={this.state.isLoggedIn} component={Dashboard}/>
+                    <Auth isLoggedIn={this.state.isLoggedIn} logoutHandler={this.logoutHandler} component={Dashboard}/>
                     <Route component={NotFound404}/>
                 </Switch>
                 
