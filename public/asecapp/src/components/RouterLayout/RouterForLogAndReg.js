@@ -49,9 +49,8 @@ export default class RouterForLogAndReg extends Component{
     }
     //============LOGOUT FUNCTIONS==========================================
     logoutHandler = ()=>{
-        console.log("logout");
         localStorage.clear();
-        this.setState({isLoggedIn:false,isRegistered:false});
+        this.setState({isLoggedIn:false,isRegistered:false,loginInputs:{userid:null,password:null}});
     }
     //----------------------------------------------------------------------
     //============LOGIN FUNCTIONS===========================================

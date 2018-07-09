@@ -10,6 +10,7 @@ const UserModel = require('../mongodb/models/userReg.db');
 //Defining Passport Strategy
 passport.use(new LocalStrategy({usernameField:"userid", passwordField:"password"},
 (username, password, done) =>{
+    console.log(username,password);
     //fing user from mongodb 
     UserModel.findOne({ userid: username }, (err, user)=> {
     if (err) { return done(err); }

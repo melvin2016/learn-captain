@@ -43,6 +43,7 @@ const register = (req,res)=>{
 };
 // /user/login controller
 const login = (req,res)=>{
+    
     const secret = 'Y0lO30L0Blaf'; //secret for signing jwt
     //signing Jsonwebtoken and sending to client
     jwt.sign({userid : req.authInfo.userid},secret,{ expiresIn: '1h' },(err,jwt)=>{
