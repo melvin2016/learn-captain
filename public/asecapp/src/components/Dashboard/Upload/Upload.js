@@ -1,14 +1,12 @@
 import React from 'react';
-import { Toast } from 'react-materialize';
-
 const Upload = (props)=>{
     return (
         <div className="container" >
         <h1 className="center-align flow-text">Upload Pdfs</h1>
-            <form  action="#">
+            <form>
                 <div className="file-field input-field">
-                <div className="btn">
-                    <span>File</span>
+                <div className="btn" >
+                    <span>Select Pdf</span>
                     <input type="file" onChange={props.uploadHandler}/>
                 </div>
                 <div className="file-path-wrapper">
@@ -16,7 +14,6 @@ const Upload = (props)=>{
                 </div>
                 </div>
             </form>
-            {(props.toast !== null)?<Toast toast={props.toast}/>:null}
         </div>
     );
 }

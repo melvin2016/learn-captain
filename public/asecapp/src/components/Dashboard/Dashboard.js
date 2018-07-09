@@ -1,23 +1,24 @@
 import React,{Component} from 'react';
 import NavBarMedium from '../navbar/NavBarMedium';
 import Upload from './Upload/Upload';
-import Toast from 'react-materialize/lib/Toast';
+import M from 'materialize-css';
+import Switch from 'react-router-dom/Switch';
+import { Route } from 'react-router-dom';
+import NotFound404 from '../NotFound404/NotFound404';
 class Dashboard extends Component{
     constructor(props){
         super(props);
         this.state={
             isLoggedIn:null,
             file:null,
-            toast:{
-                message:null,
-            },
+            isPdf:false,
             links:[
                 {
-                    link:'/upload',
+                    link:`/upload`,
                     name:'Upload Docs'
                 },
                 {
-                    link:'/chat',
+                    link:`/chat`,
                     name:'Group Chat'
                 },
                 {
@@ -32,12 +33,16 @@ class Dashboard extends Component{
         const file = e.target.files[0];
         if( file && file.type === "application/pdf"){
             this.setState({
-                toast:{message:null},
+                isPdf:true,
                 file:file
             });
         }else{
-            this.setState({toast:{message:"Only Pdf File Allowed!"}});
+            this.setState({isPdf:false})
+            M.toast({html:"Only Pdf File Allowed!"});
         }
+    }
+    uploadHandlerSubmit=()=>{
+
     }
     componentDidMount(){
         const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -50,7 +55,15 @@ class Dashboard extends Component{
         return (
             <div>
                 <NavBarMedium links={this.state.links}/>
-                <Upload uploadHandler={this.uploadHandler} toast={this.state.toast.message}/>
+                <Switch>
+                    <Route path="/dashboard" render={(props)=>
+                        <Upload {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
+                    }/>
+                    <Route path="/upload" render={(props)=>
+                        <Upload {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
+                    }/>
+                    <Route component={NotFound404}/>
+                </Switch>
             </div>
         );
     }
