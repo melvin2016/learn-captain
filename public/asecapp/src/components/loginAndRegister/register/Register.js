@@ -8,12 +8,13 @@ const Register = (props)=>{
             <h1 className="flow-text center-align">Register</h1>
             <Row><Input s={12} m={12} label="User Id" id="userid" validate onInput={props.handleInput}><Icon>person</Icon></Input></Row>
             <Row>
-                <div className="input-field col s7 m7">
+                <div className="input-field col s12 m7">
                     <i className="material-icons prefix">lock</i>
                     <input type="password" id="password" onChange={props.checkPass}  className={(props.isPassSame === true ?" valid" : " invalid") } onInput={props.handleInput}/>
                     <label htmlFor="password">Password</label>
                 </div>
-                <div className="input-field col s5 m5">
+                <div className="input-field col s12 m5">
+                    <i className="hide-on-med-and-up material-icons prefix">lock</i>
                     <input type="password" id="cPassword" onChange={props.checkPass}  className={(props.isPassSame === true ?" valid" : " invalid" )} onInput={props.handleInput}/>
                     <label htmlFor="cPassword">Confirm Password</label>
                 </div>

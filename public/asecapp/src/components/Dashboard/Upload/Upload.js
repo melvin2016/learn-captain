@@ -13,6 +13,7 @@ const Upload = (props)=>{
                     <input className="file-path validate" type="text"/>
                 </div>
                 </div>
+                <div className="center-align"><a onClick={props.uploadHandlerSubmit} className="waves-effect waves-light btn"><i className="material-icons right">cloud</i>Upload</a></div>
             </form>
         </div>
     );

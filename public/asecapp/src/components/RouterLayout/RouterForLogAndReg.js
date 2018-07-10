@@ -41,6 +41,7 @@ export default class RouterForLogAndReg extends Component{
     componentDidMount(){
         //checks whether the user is authenticated even after a page refresh
         const isLoggedIn = localStorage.getItem('isLoggedIn');
+        
         if(isLoggedIn === "true"){
             this.setState({isLoggedIn:true});
         }else{

@@ -5,6 +5,9 @@ import M from 'materialize-css';
 import Switch from 'react-router-dom/Switch';
 import { Route } from 'react-router-dom';
 import NotFound404 from '../NotFound404/NotFound404';
+import Redirect from 'react-router-dom/Redirect';
+import axios from '../../lib/axios/instance';
+import FormData from 'form-data';
 class Dashboard extends Component{
     constructor(props){
         super(props);
@@ -12,6 +15,7 @@ class Dashboard extends Component{
             isLoggedIn:null,
             file:null,
             isPdf:false,
+            jwt:null,
             links:[
                 {
                     link:`/upload`,
@@ -42,12 +46,39 @@ class Dashboard extends Component{
         }
     }
     uploadHandlerSubmit=()=>{
+        if(this.state.isPdf === true){
+            const uploadData = new FormData();
+            uploadData.append('pdfFile',this.state.file);
+            axios.post("/api/upload",uploadData,{
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    jwt:this.state.jwt
+                },
+            })
+            .then((res)=>{
+                console.log(res);
+            })
+            .catch((err)=>{
+                if(err && err.response && err.response.status){
+                    if(err.response.status === 401){
+                        localStorage.clear();
+                        this.setState({isLoggedIn:false});
+                        M.toast({html:err.response.data.err});
+                    }else if(err.response.status === 400){
+                        M.toast({html:err.response.data.err});
+                    }
+                }
 
+            });
+        }else{
+            M.toast({html:"Select Any Pdf before Uploading"});
+        }
     }
     componentDidMount(){
         const isLoggedIn = localStorage.getItem('isLoggedIn');
+        const jwt = localStorage.getItem('jwt');
         if(isLoggedIn === "true"){
-            this.setState({isLoggedIn:true});
+            this.setState({isLoggedIn:true,jwt:jwt});
         }
     }
     render(){
@@ -56,8 +87,8 @@ class Dashboard extends Component{
             <div>
                 <NavBarMedium links={this.state.links}/>
                 <Switch>
-                    <Route path="/dashboard" render={(props)=>
-                        <Upload {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
+                    <Route path="/dashboard" render={()=>
+                        <Redirect to="/upload" />    
                     }/>
                     <Route path="/upload" render={(props)=>
                         <Upload {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>

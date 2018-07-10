@@ -28,9 +28,12 @@ passport.deserializeUser(function(user,done){
 
 
 //custom routes
-const userRoutes  = require('./routes/user.routes');
-///user Routes
+const userRoutes  = require('./routes/user.routes'); 
+const apiRoutes = require('./routes/api.routes');
+//user routes catcher
 app.use('/user',userRoutes);
+//api routes catcher
+app.use('/api',apiRoutes);
 
 
 //SETTING PORT
