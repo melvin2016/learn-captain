@@ -56,7 +56,9 @@ class Dashboard extends Component{
                 },
             })
             .then((res)=>{
-                console.log(res);
+                if(res.status === 200){
+                    M.toast({html:res.data});
+                }
             })
             .catch((err)=>{
                 if(err && err.response && err.response.status){

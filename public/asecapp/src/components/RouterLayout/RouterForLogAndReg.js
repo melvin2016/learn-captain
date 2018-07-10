@@ -7,6 +7,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import Auth from '../Auth/Auth';
 import NotFound404 from '../NotFound404/NotFound404';
 import axios from '../../lib/axios/instance';
+import M from 'materialize-css';
 export default class RouterForLogAndReg extends Component{
     constructor(props){
         super(props);
@@ -52,6 +53,7 @@ export default class RouterForLogAndReg extends Component{
     logoutHandler = ()=>{
         localStorage.clear();
         this.setState({isLoggedIn:false,isRegistered:false,loginInputs:{userid:null,password:null}});
+        M.toast({html:"Succesfully Logged Out"});
     }
     //----------------------------------------------------------------------
     //============LOGIN FUNCTIONS===========================================
@@ -74,10 +76,13 @@ export default class RouterForLogAndReg extends Component{
                 localStorage.setItem('isLoggedIn',true);
                 localStorage.setItem('jwt',res.data.jwt);
                 this.setState({isLoggedIn:true});
+                M.toast({html:"Logged In"});
             }
         })
         .catch((err)=>{
-            console.log(err);
+            if(err && err.response && err.response.status===401){
+                M.toast({html:"Wrong Username or Password!"});
+            }
         })
     }
     //----------------------------------------------------------------------
@@ -96,6 +101,7 @@ export default class RouterForLogAndReg extends Component{
         .then((res)=>{
             if(res.status === 200){
                 this.setState({isRegistered:true});
+                M.toast({html:`User Registered with User Id : ${this.state.regInputs.userid}`});
             }
         })
     }

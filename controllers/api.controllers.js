@@ -1,10 +1,11 @@
 const upload = (req,res)=>{
-    console.log(req.err);
     if(req && req.err){
         res.status(400).send({err:req.err});
         return;
     }
-    res.send("upload handler working");
+
+    console.log(req.file);
+    res.send("Uploaded Successfully!");
 }
 
 module.exports={
