@@ -16,6 +16,7 @@ class Dashboard extends Component{
             file:null,
             isPdf:false,
             jwt:null,
+            progressBar:false,
             links:[
                 {
                     link:`/upload`,
@@ -46,6 +47,7 @@ class Dashboard extends Component{
         }
     }
     uploadHandlerSubmit=()=>{
+        this.setState({progressBar:true});
         if(this.state.isPdf === true){
             const uploadData = new FormData();
             uploadData.append('pdfFile',this.state.file);
@@ -57,10 +59,12 @@ class Dashboard extends Component{
             })
             .then((res)=>{
                 if(res.status === 200){
-                    M.toast({html:res.data});
+                    this.setState({progressBar:false});
+                    M.toast({html:res.data.message});
                 }
             })
             .catch((err)=>{
+                this.setState({progressBar:false});
                 if(err && err.response && err.response.status){
                     if(err.response.status === 401){
                         localStorage.clear();
@@ -73,6 +77,7 @@ class Dashboard extends Component{
 
             });
         }else{
+            this.setState({progressBar:false});
             M.toast({html:"Select Any Pdf before Uploading"});
         }
     }
@@ -93,7 +98,7 @@ class Dashboard extends Component{
                         <Redirect to="/upload" />    
                     }/>
                     <Route path="/upload" render={(props)=>
-                        <Upload {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
+                        <Upload progressBar={this.state.progressBar} {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
                     }/>
                     <Route component={NotFound404}/>
                 </Switch>

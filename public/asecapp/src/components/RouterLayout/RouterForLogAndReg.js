@@ -12,6 +12,7 @@ export default class RouterForLogAndReg extends Component{
     constructor(props){
         super(props);
         this.state = {
+            progressBar:false,
             links:[
                 {
                     link:'/login',
@@ -66,12 +67,14 @@ export default class RouterForLogAndReg extends Component{
     }
     //submit handler for userid and password
     submitHandlerLog = ()=>{
+        this.setState({progressBar:true});
         const body = {...this.state.loginInputs};
         axios.post('/user/login',{
             userid : body.userid,
             password : body.password
         })
         .then((res)=>{
+            this.setState({progressBar:false});
             if(res.status === 200){
                 localStorage.setItem('isLoggedIn',true);
                 localStorage.setItem('jwt',res.data.jwt);
@@ -80,6 +83,7 @@ export default class RouterForLogAndReg extends Component{
             }
         })
         .catch((err)=>{
+            this.setState({progressBar:false});
             if(err && err.response && err.response.status===401){
                 M.toast({html:"Wrong Username or Password!"});
             }
@@ -89,6 +93,7 @@ export default class RouterForLogAndReg extends Component{
     //============REGISTER FUNCTIONS=========================================
     //submitting form and sending POST data to server ==> /register - /register
     onSubmit = (e)=>{
+        this.setState({progressBar:true});
         e.preventDefault();
         const body = {...this.state.regInputs};
         axios.post('/user/register',{
@@ -99,9 +104,14 @@ export default class RouterForLogAndReg extends Component{
             regno : body.uniseat 
         })
         .then((res)=>{
+            this.setState({progressBar:false});
             if(res.status === 200){
                 this.setState({isRegistered:true});
                 M.toast({html:`User Registered with User Id : ${this.state.regInputs.userid}`});
+            }
+        }).catch((err)=>{
+            if(err && err.response){
+                M.toast({html:err.response.data});
             }
         })
     }
@@ -132,17 +142,16 @@ export default class RouterForLogAndReg extends Component{
                     <Route exact path="/" render={()=><h1>Home</h1>}/>
                     <Route path="/login" render={(props)=>
                         /*Giving Out Props to Login Component */
-                        <Login {...props} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
+                        <Login {...props} progressBar={this.state.progressBar} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
                     } />
                     <Route path="/register" render={(props) =>  
                         /*Giving Out Props to Register Component */
-                        <Register {...props} isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
+                        <Register {...props} progressBar={this.state.progressBar}  isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
                     }/>
                     
                     <Auth isLoggedIn={this.state.isLoggedIn} logoutHandler={this.logoutHandler} component={Dashboard}/>
                     <Route component={NotFound404}/>
                 </Switch>
-                
             </React.Fragment>
         );
     }

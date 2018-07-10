@@ -3,3 +3,11 @@
     margin-left: 30%;
     margin-right: 30%; 
 }
+.progress{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    margin:0px;
+}
