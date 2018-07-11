@@ -27,7 +27,7 @@ const register = (req,res)=>{
             //saving user to mongodb
             User.save((err,data)=>{
                 if(err){
-                    throw new Error({"Error On saving ": err});
+                    res.status(500).send({err: err.name});
                 }else{
                     console.log(data);
                     res.send(data);
@@ -35,7 +35,7 @@ const register = (req,res)=>{
             });
         //cathing error from promises if any.
         }).catch((err)=>{
-            if(err) throw {"message ":"error in hashing"};
+            res.status(500).send(err);
         })
 
     });

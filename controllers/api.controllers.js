@@ -25,7 +25,10 @@ const upload = (req,res)=>{
     });
 }
 const getAllUploadedFilesNames = (req,res)=>{
-
+    UserUploadModel.find((err,data)=>{
+        console.log(data);
+        res.send(data);
+    });
 }
 module.exports={
     upload:upload,

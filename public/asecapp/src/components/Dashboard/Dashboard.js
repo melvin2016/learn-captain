@@ -48,6 +48,7 @@ class Dashboard extends Component{
     }
     uploadHandlerSubmit=()=>{
         this.setState({progressBar:true});
+        axios.defaults.timeout = 10000;
         if(this.state.isPdf === true){
             const uploadData = new FormData();
             uploadData.append('pdfFile',this.state.file);
@@ -74,7 +75,7 @@ class Dashboard extends Component{
                         M.toast({html:err.response.data.err});
                     }
                 }
-
+                console.log(err.response);
             });
         }else{
             this.setState({progressBar:false});

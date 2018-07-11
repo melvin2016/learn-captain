@@ -32,6 +32,7 @@ Router
     .use(jwt.verify)
     .use(upload.single('pdfFile'))
     .post('/upload',apiControllers.upload);
-
+Router
+    .get('/getAllFiles',apiControllers.getAllUploadedFilesNames);
 //exporting module
 module.exports=Router;

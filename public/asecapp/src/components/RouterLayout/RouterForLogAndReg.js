@@ -26,6 +26,7 @@ export default class RouterForLogAndReg extends Component{
             isRegistered : false,
             isLoggedIn : false,
             isPassSame:false,
+            registerAgain:true,
             regInputs:{
                 userid:null,
                 password:null,
@@ -93,27 +94,47 @@ export default class RouterForLogAndReg extends Component{
     //============REGISTER FUNCTIONS=========================================
     //submitting form and sending POST data to server ==> /register - /register
     onSubmit = (e)=>{
-        this.setState({progressBar:true});
-        e.preventDefault();
-        const body = {...this.state.regInputs};
-        axios.post('/user/register',{
-            userid : body.userid,
-            password : body.password,
-            email : body.email,
-            num : body.tel,
-            regno : body.uniseat 
-        })
-        .then((res)=>{
-            this.setState({progressBar:false});
-            if(res.status === 200){
-                this.setState({isRegistered:true});
-                M.toast({html:`User Registered with User Id : ${this.state.regInputs.userid}`});
+        const state = {...this.state.regInputs};
+        if(state.userid !== null && state.uniseat !== null && state.tel !== null && state.password !== null && state.email !== null && state.cPassword !== null){
+            if(state.cPassword !== state.password){
+                M.toast({html:"Passwords Doesn't Match!"});
+                return;
             }
-        }).catch((err)=>{
-            if(err && err.response){
-                M.toast({html:err.response.data});
+            if(state.tel.length < 10 || state.tel.length > 10){
+                M.toast({html:"Check Mobile Number!"});
+                return;
             }
-        })
+            this.setState({progressBar:true});
+            e.preventDefault();
+            const body = {...this.state.regInputs};
+            axios.post('/user/register',{
+                userid : body.userid,
+                password : body.password,
+                email : body.email,
+                num : body.tel,
+                regno : body.uniseat 
+            })
+            .then((res)=>{
+                this.setState({progressBar:false});
+                if(res.status === 200){
+                    this.setState({isRegistered:true});
+                    M.toast({html:`User Registered with User Id : ${this.state.regInputs.userid}`});
+                }
+                this.setState({isRegistered:false});
+            }).catch((err)=>{
+                this.setState({progressBar:false});
+                if(err && err.response){
+                    console.log(err.response);
+                    M.toast({html:`Internal server Error - ${err.response.data.err}`});
+                }
+            })
+        }else{
+            M.toast({html:"Check All The Fields !"});
+        }
+        
+    }
+    componentDidUpdate(){
+        
     }
     //checking for password's match - /register
     checkPass = (e)=>{

@@ -4,6 +4,7 @@ import {Row,Input,Icon,Button} from 'react-materialize';
 import Redirect from 'react-router-dom/Redirect';
 import {Link} from 'react-router-dom';
 const Register = (props)=>{
+    
     return(
             <div className={classes.nav+" container"}>
                 {(props.progressBar === true)?<div className={"progress "+classes.progress}>
