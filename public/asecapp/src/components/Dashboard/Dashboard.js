@@ -8,6 +8,7 @@ import NotFound404 from '../NotFound404/NotFound404';
 import Redirect from 'react-router-dom/Redirect';
 import axios from '../../lib/axios/instance';
 import FormData from 'form-data';
+import fileDownload from 'js-file-download';
 class Dashboard extends Component{
     constructor(props){
         super(props);
@@ -17,6 +18,7 @@ class Dashboard extends Component{
             isPdf:false,
             jwt:null,
             progressBar:false,
+            uploadedFiles:null,
             links:[
                 {
                     link:`/upload`,
@@ -46,9 +48,21 @@ class Dashboard extends Component{
             M.toast({html:"Only Pdf File Allowed!"});
         }
     }
+    getAllFiles=(jwt)=>{
+        axios.get('/api/getAllFiles',{
+            headers:{
+                jwt:jwt
+            }
+        })
+        .then((data)=>{
+            this.setState({uploadedFiles:data.data});
+        })
+        .catch((err)=>{
+            M.toast({html:err.response.data});
+        });
+    }
     uploadHandlerSubmit=()=>{
         this.setState({progressBar:true});
-        axios.defaults.timeout = 10000;
         if(this.state.isPdf === true){
             const uploadData = new FormData();
             uploadData.append('pdfFile',this.state.file);
@@ -63,6 +77,8 @@ class Dashboard extends Component{
                     this.setState({progressBar:false});
                     M.toast({html:res.data.message});
                 }
+                const jwt = this.state.jwt;
+                this.getAllFiles(jwt);
             })
             .catch((err)=>{
                 this.setState({progressBar:false});
@@ -82,12 +98,35 @@ class Dashboard extends Component{
             M.toast({html:"Select Any Pdf before Uploading"});
         }
     }
+    downloadPdf = (id,name)=>{
+        axios.get(`/api/getOneFile/${id}`,{
+            headers:{
+                jwt:this.state.jwt,
+            },
+            responseType:'blob'
+        })
+        .then((data)=>{
+            const url = window.URL.createObjectURL(new File([data.data],{type : "text/plain",lastModified:Date.now()}));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', name); //or any other extension
+            document.body.appendChild(link);
+            link.click();
+            // console.log(data);
+            // const file = new File([data.data],{type : "text/plain",lastModified:Date.now()});            
+            // fileDownload(file,name);
+        })
+        .catch((err)=>{
+            console.log(err.response);
+        });
+    }
     componentDidMount(){
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         const jwt = localStorage.getItem('jwt');
         if(isLoggedIn === "true"){
             this.setState({isLoggedIn:true,jwt:jwt});
         }
+        this.getAllFiles(jwt);
     }
     render(){
         console.log(this.props);
@@ -99,7 +138,7 @@ class Dashboard extends Component{
                         <Redirect to="/upload" />    
                     }/>
                     <Route path="/upload" render={(props)=>
-                        <Upload progressBar={this.state.progressBar} {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
+                        <Upload downloadPdf={this.downloadPdf} uploadedFiles={this.state.uploadedFiles} progressBar={this.state.progressBar} {...props} uploadHandlerSubmit={this.uploadHandlerSubmit} uploadHandler={this.uploadHandler} isPdf={this.state.isPdf}/>
                     }/>
                     <Route component={NotFound404}/>
                 </Switch>

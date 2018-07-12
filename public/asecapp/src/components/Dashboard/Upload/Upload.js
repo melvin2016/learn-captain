@@ -1,5 +1,7 @@
 import React from 'react';
 import classes from './Upload.css';
+import pdfImg from './pics/pdf.png';
+import moment from 'moment';
 const Upload = (props)=>{
     return (
         <div>
@@ -21,8 +23,32 @@ const Upload = (props)=>{
                         </div>
                         </div>
                     </form>
-                    <div className="center-align"><a onClick={props.uploadHandlerSubmit} className="waves-effect waves-light btn"><i className="material-icons right">cloud_upload</i>Upload</a></div>
+                    <div className="center-align"><a  className="waves-effect waves-light btn" onClick={props.uploadHandlerSubmit}><i className="material-icons right">cloud_upload</i>Upload</a></div>
                 </div>
+                {(props.uploadedFiles !== null)?
+                    <div className="row">
+                        <div className="col s12 m12">
+                            <ul className="collection">
+                                {props.uploadedFiles !== null ? props.uploadedFiles.map((ele)=>{
+                                    console.log(ele);
+                                    return (
+                                        <li key={ele._id} className="collection-item avatar" >
+                                            <img src={pdfImg} alt="" className="circle"/>
+                                            <span className="title">{ele.originalName}</span>
+                                            <p style={{color:'gray'}}>
+                                                Uploaded By {ele.userid}<br/>
+                                                Created on : {moment(ele.created).format('h:mm a, MMMM Do YYYY')}
+                                            </p>
+                                            <div><a className={"secondary-content "+classes.hoverable} download><i  className="material-icons" onClick={()=>{
+                                                return props.downloadPdf(ele._id,ele.originalName);
+                                            }} >cloud_download</i></a></div>
+                                        </li>
+                                    );
+                                }) :  null}
+                            </ul>
+                        </div>
+                    </div>:null
+                }
             </div>
         </div>
     );

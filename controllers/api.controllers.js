@@ -1,6 +1,6 @@
 //requiring UserUploadModel for storing filename associated with each user
 const UserUploadModel = require('../mongodb/models/userUpload.db');
-
+const path = require('path');
 const upload = (req,res)=>{
     if(req && req.err){
         res.status(400).send({err:req.err});
@@ -26,11 +26,22 @@ const upload = (req,res)=>{
 }
 const getAllUploadedFilesNames = (req,res)=>{
     UserUploadModel.find((err,data)=>{
-        console.log(data);
+        if(err){ res.status(400).send(err); return;}
         res.send(data);
     });
 }
+
+const getOneFile = (req,res)=>{
+    UserUploadModel.findById(req.params.id,(err,data)=>{
+        if(err){
+            res.status(400).send(err);
+            return;
+        }
+        res.download(__dirname+`/../upload/${data.filename}`);
+    });
+};
 module.exports={
     upload:upload,
-    getAllUploadedFilesNames,getAllUploadedFilesNames
+    getAllUploadedFilesNames,getAllUploadedFilesNames,
+    getOneFile:getOneFile
 }

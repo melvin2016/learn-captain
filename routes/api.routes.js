@@ -34,5 +34,7 @@ Router
     .post('/upload',apiControllers.upload);
 Router
     .get('/getAllFiles',apiControllers.getAllUploadedFilesNames);
+Router
+    .get('/getOneFile/:id',apiControllers.getOneFile);
 //exporting module
 module.exports=Router;
