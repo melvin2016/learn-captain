@@ -1,6 +1,5 @@
 //requiring UserUploadModel for storing filename associated with each user
 const UserUploadModel = require('../mongodb/models/userUpload.db');
-const path = require('path');
 const upload = (req,res)=>{
     if(req && req.err){
         res.status(400).send({err:req.err});
