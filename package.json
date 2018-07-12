@@ -22,8 +22,5 @@
   },
   "devDependencies": {
     "cors": "^2.8.4"
-  },
-  "engines": {
-     "npm": "2.1.x" 
   }
 }
