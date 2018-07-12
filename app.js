@@ -6,7 +6,7 @@ const express = require('express'),
       passport = require('passport'),
       cors = require('cors');
 //using cors for all reqs
-app.use(cors());
+// app.use(cors());
 //serving static files
 app.use(express.static(path.resolve(__dirname,'public/asecapp/build')));
 // parse application/x-www-form-urlencoded
