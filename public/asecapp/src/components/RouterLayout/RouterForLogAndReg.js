@@ -8,6 +8,7 @@ import Auth from '../Auth/Auth';
 import NotFound404 from '../NotFound404/NotFound404';
 import axios from '../../lib/axios/instance';
 import M from 'materialize-css';
+import Home from '../Home/Home';
 export default class RouterForLogAndReg extends Component{
     constructor(props){
         super(props);
@@ -160,7 +161,7 @@ export default class RouterForLogAndReg extends Component{
                 {(this.state.isLoggedIn === true)?null:<NavBarMedium links={this.state.links}/>}
                 <Switch>
                     {/* this component is shown if route is */}
-                    <Route exact path="/" render={()=><h1>Home</h1>}/>
+                    <Route exact path="/" component={Home}/>
                     <Route path="/login" render={(props)=>
                         /*Giving Out Props to Login Component */
                         <Login {...props} progressBar={this.state.progressBar} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
