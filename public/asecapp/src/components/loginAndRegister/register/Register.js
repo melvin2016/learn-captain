@@ -3,9 +3,12 @@ import classes from './Register.css';
 import {Row,Input,Icon,Button} from 'react-materialize';
 import Redirect from 'react-router-dom/Redirect';
 import {Link} from 'react-router-dom';
+import NavBarMedium from '../../navbar/NavBarMedium';
 const Register = (props)=>{
     
     return(
+        <React.Fragment>
+            <NavBarMedium links={props.links}/>
             <div className={classes.nav+" container"}>
                 {(props.progressBar === true)?<div className={"progress "+classes.progress}>
                     <div className="indeterminate"></div>
@@ -33,6 +36,7 @@ const Register = (props)=>{
                 {/* Redirects route to /login if registered successfully */}
                 {props.isRegistered === true || props.isLoggedIn === true ? <Redirect to="/login"/> : null}
             </div>
+            </React.Fragment>
     )
 };
 

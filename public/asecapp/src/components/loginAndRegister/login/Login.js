@@ -3,6 +3,8 @@ import classes from './Login.css';
 import {Row,Input,Icon,Button} from 'react-materialize';
 import Redirect from 'react-router/Redirect';
 import {Link} from 'react-router-dom';
+import NavBarMedium from '../../navbar/NavBarMedium';
+
 const Login = (props)=>{
     return (
         <div>
@@ -10,6 +12,7 @@ const Login = (props)=>{
                 <div className="indeterminate"></div>
             </div>:null
             }
+            <NavBarMedium links={props.links}/>
             <div className="container">
                 <h1 className="flow-text center-align">Login</h1>
                 <p className="center-align flow-text">Don't have an account? <Link to="/register">Register.</Link></p>

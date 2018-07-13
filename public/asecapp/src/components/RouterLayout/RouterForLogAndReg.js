@@ -162,11 +162,11 @@ export default class RouterForLogAndReg extends Component{
                     <Route exact path="/" component={Home}/>
                     <Route path="/login" render={(props)=>
                         /*Giving Out Props to Login Component */
-                        <Login {...props} progressBar={this.state.progressBar} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
+                        <Login {...props} links={this.state.links} progressBar={this.state.progressBar} isLoggedIn={this.state.isLoggedIn} submitHandlerLog={this.submitHandlerLog} handleInputLog={this.handleInputLog} />
                     } />
                     <Route path="/register" render={(props) =>  
                         /*Giving Out Props to Register Component */
-                        <Register {...props} progressBar={this.state.progressBar}  isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
+                        <Register {...props} links={this.state.links} progressBar={this.state.progressBar}  isLoggedIn={this.state.isLoggedIn} isRegistered={this.state.isRegistered} onSubmit={this.onSubmit} checkPass={this.checkPass} password={this.state.regInputs.password} cPassword={this.state.regInputs.cPassword} handleInput={this.handleInput} isPassSame={this.state.isPassSame}/> 
                     }/>
                     
                     <Auth isLoggedIn={this.state.isLoggedIn} logoutHandler={this.logoutHandler} component={Dashboard}/>
