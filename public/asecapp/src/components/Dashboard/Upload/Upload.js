@@ -37,7 +37,7 @@ const Upload = (props)=>{
                                             <span className="title">{ele.originalName}</span>
                                             <p style={{color:'gray'}}>
                                                 Uploaded By {ele.userid}<br/>
-                                                Created on : {moment(ele.created).format('h:mm a - MMM Do \'YY')}
+                                                 {moment(ele.created).format('Do MMM \'YY - h:mm a')}
                                             </p>
                                             <div><a className={"secondary-content "+classes.hoverable} download><i  className="material-icons" onClick={()=>{
                                                 return props.downloadPdf(ele._id,ele.originalName);

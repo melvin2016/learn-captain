@@ -99,6 +99,7 @@ class Dashboard extends Component{
         }
     }
     downloadPdf = (id,name)=>{
+        this.setState({progressBar:true});
         axios.get(`/api/getOneFile/${id}`,{
             headers:{
                 jwt:this.state.jwt,
@@ -106,17 +107,13 @@ class Dashboard extends Component{
             responseType:'blob'
         })
         .then((data)=>{
-            const url = window.URL.createObjectURL(new File([data.data],{type : "text/plain",lastModified:Date.now()}));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', name); //or any other extension
-            document.body.appendChild(link);
-            link.click();
-            // console.log(data);
-            // const file = new File([data.data],{type : "text/plain",lastModified:Date.now()});            
-            // fileDownload(file,name);
+            console.log(data);
+            const file = new File([data.data],{type : "text/plain",lastModified:Date.now()});            
+            this.setState({progressBar:false});
+            fileDownload(file,name);
         })
         .catch((err)=>{
+            this.setState({progressBar:false});
             console.log(err.response);
         });
     }

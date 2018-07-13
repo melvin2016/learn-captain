@@ -1,12 +1,13 @@
 import React from 'react';
 import students from './pics/students.jpg';
 import kerala from './pics/kerala.jpg';
+import bgsound from './sound/bgsound.mp3';
 import M from 'materialize-css';
 const Home = ()=>{
     var elems = document.querySelectorAll('.slider');
      M.Slider.init(elems,{height:550,interval:5000});
     return (
-        <div class="slider">
+        <div class="slider fullscreen">
         <ul class="slides">
           <li>
             <img src={students}/> 
@@ -18,7 +19,7 @@ const Home = ()=>{
           <li>
             <img src={kerala}/> 
             <div class="caption center-align">
-              <h3 className="">Presented with <i class="material-icons">favorite</i> By</h3>
+              <h3 className="">Built Using<i class="material-icons">favorite</i> By</h3>
               <h5 class="light grey-text text-lighten-3">MELVIN GEORGE</h5>
               <h5 class="light grey-text text-lighten-3">ABIJITH PA</h5>
               <h5 class="light grey-text text-lighten-3">BHARAT RAJAGOPAL</h5>
@@ -28,6 +29,7 @@ const Home = ()=>{
             </div>
           </li>
         </ul>
+        <embed src={bgsound}/>
       </div>
     );
 };
