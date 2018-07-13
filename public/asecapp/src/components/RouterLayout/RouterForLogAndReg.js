@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Route , Switch} from 'react-router-dom';
-import NavBarMedium from '../navbar/NavBarMedium';
 import Login from '../loginAndRegister/login/Login';
 import Register from '../loginAndRegister/register/Register';
 import Dashboard from '../Dashboard/Dashboard';
@@ -158,7 +157,6 @@ export default class RouterForLogAndReg extends Component{
     render(){
         return (
             <React.Fragment>
-                {(this.state.isLoggedIn === true)?null:<NavBarMedium links={this.state.links}/>}
                 <Switch>
                     {/* this component is shown if route is */}
                     <Route exact path="/" component={Home}/>
