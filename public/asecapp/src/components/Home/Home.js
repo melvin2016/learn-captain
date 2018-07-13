@@ -3,7 +3,10 @@ import students from './pics/students.jpg';
 import kerala from './pics/kerala.jpg';
 import bgsound from './sound/bgsound.mp3';
 import M from 'materialize-css';
+import NavLink from 'react-router-dom/NavLink';
 const Home = ()=>{
+    var elems1 = document.querySelectorAll('.tooltipped');
+    M.Tooltip.init(elems1);
     var elems = document.querySelectorAll('.slider');
      M.Slider.init(elems,{height:550,interval:5000});
     return (
@@ -27,6 +30,15 @@ const Home = ()=>{
             </div>
           </li>
         </ul>
+        <div class="fixed-action-btn">
+          <a class="btn-floating btn-large red">
+            <i class="large material-icons">unfold_more</i>
+          </a>
+          <ul>
+            <li className="tooltipped" data-position="left" data-tooltip="Login"><NavLink class="btn-floating blue"  to="/login"><i class="material-icons">cloud</i></NavLink></li>
+            <li className="tooltipped" data-position="left" data-tooltip="Register"><NavLink class="btn-floating green"  to="/register"><i class="material-icons">create</i></NavLink></li>
+          </ul>
+        </div>
         <embed src={bgsound} autostart="true" width="0" height="0"/>
       </div>
     );
