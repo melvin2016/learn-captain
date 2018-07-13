@@ -10,26 +10,24 @@ const Home = ()=>{
         <div class="slider fullscreen">
         <ul class="slides">
           <li>
-            <img src={students}/> 
+            <img src={students} /> 
             <div class="caption left-align">
-              <h3 className="black-text">Asecapp</h3>
-              <h5 class="light black-text text-lighten-3">Simulating students working environment.</h5>
+              <h3 className="white-text">Asecapp</h3>
+              <h5 class="light white-text text-lighten-3">Simulating students working environment.</h5>
             </div>
           </li>
           <li>
-            <img src={kerala}/> 
+            <img src={kerala} style={{opacity:0.7}}/> 
             <div class="caption center-align">
-              <h3 className="">Built Using<i class="material-icons">favorite</i> By</h3>
-              <h5 class="light grey-text text-lighten-3">MELVIN GEORGE</h5>
-              <h5 class="light grey-text text-lighten-3">ABIJITH PA</h5>
-              <h5 class="light grey-text text-lighten-3">BHARAT RAJAGOPAL</h5>
-              <h5 class="light grey-text text-lighten-3">SAHAL ABDUL LATHEEF</h5>
-              <h5 class="light grey-text text-lighten-3">MIKHA GEORGE</h5>
-              <h5 class="light grey-text text-lighten-3">ARUN VENUGOPAL</h5>
+              <h3 className="">Built with <i class="material-icons">favorite</i>, Using</h3>
+              <h5 class="light grey-text text-lighten-3">Node.js</h5>
+              <h5 class="light grey-text text-lighten-3">React.js</h5>
+              <h5 class="light grey-text text-lighten-3">Express.js</h5>
+              <h5 class="light grey-text text-lighten-3">Mongodb</h5>
             </div>
           </li>
         </ul>
-        <embed src={bgsound}/>
+        <embed src={bgsound} autostart="true" width="0" height="0"/>
       </div>
     );
 };
